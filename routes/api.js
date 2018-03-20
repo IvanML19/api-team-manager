@@ -19,7 +19,7 @@ api.delete('/product/:productId', productCtrl.deleteProduct)
 /************** PLAYER *****************/
 /***************************************/
 
-api.get('/player', playerCtrl.testPlayer )
+api.get('/player', playerCtrl.testPlayer)
 
 
 /***************************************/

@@ -1,6 +1,6 @@
 'use strict'
 
-const Player = require('../models/player')
+const Player = require('../models/player');
 
 function testPlayer(req, res) {
 	res.status(200).send("Player OK")
@@ -10,4 +10,4 @@ function testPlayer(req, res) {
 
 module.exports = {
 	testPlayer
-}
+};

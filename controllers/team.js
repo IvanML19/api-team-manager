@@ -1,6 +1,6 @@
 'use strict'
 
-const Team = require('../models/team')
+const Team = require('../models/team');
 
 function testTeam(req, res) {
 	res.status(200).send("Team OK")
@@ -8,4 +8,4 @@ function testTeam(req, res) {
 
 module.exports = {
 	testTeam
-}
+};
