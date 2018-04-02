@@ -1,7 +1,8 @@
-'use strict'
+'use strict';
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const bcrypt = require('bcrypt-nodejs');
 
 const PlayerSchema = Schema({
 	username: { type: String, unique: true },
@@ -12,36 +13,36 @@ const PlayerSchema = Schema({
 	// teamId: 
 
 	// profile
-	name: String,
-	surnames: String,
-	birhtdate: Date,
-	position: { type: String, enum: ['Portero', 'Cierre', 'Ala', 'Pivot'] },
-	height: Number,
-	weight: Number,
+	name: {type: String, default: null },
+	surnames: {type: String, default: null },
+	birhtdate: { type: Date, default: null },
+	position: { type: String, enum: ['Goalkeeper', 'Defender', 'Midfielder', 'Striker'] },
+    height: { type: Number, default: null },
+    weight: { type: Number, default: null },
 
 	// dates
     createDate: { type: Date, default: Date.now() },
 	lastLogin: { type: Date, default: null },
 	lastRecoverPasswordRequest: { type: Date, default: null },
 	lastUpdatePassword: { type: Date, default: null },
-})
+});
 
 // lanzaremos esto antes de realizar un grabado (registro) de un player
-PlayerSchema.pre('save', (next) => {
-	let user = this;
+PlayerSchema.pre('save', function (next) {
+	let player = this;
 
-	if(!user.isModified('password')) return next();
+	if(!player.isModified('password')) return next();
 
 	bcrypt.genSalt(10, (err, salt) => {
 		if(err) return next();
 
-		bcrypt.hash(user.password, salt, null, (err, hash) => {
+		bcrypt.hash(player.password, salt, null, (err, hash) => {
 			if(err) return next(err);
 
-			user.password = hash;
+            player.password = hash;
 			next()
 		})
 	})
-})
+});
 
 module.exports = mongoose.model('Player', PlayerSchema);
